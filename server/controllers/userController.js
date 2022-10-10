@@ -73,7 +73,7 @@ export const googlesigninController = async (req, res) => {
            //if(!isPasswordCorrect) return res.status(400).json({ message: 'Invalid credentials' });
         
            //create a token for logged user as session
-           const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, 'secret', { expiresIn: '1h' });
+           const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
    
            return res.status(200).json({ result: existingUser, token });
            
