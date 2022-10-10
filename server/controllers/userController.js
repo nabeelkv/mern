@@ -1,7 +1,10 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 import UserAccount from '../models/userModel.js';
+
+dotenv.config();
 
 export const signinController = async (req, res) => {
     const { email, password } = req.body;
@@ -17,7 +20,7 @@ export const signinController = async (req, res) => {
         if(!isPasswordCorrect) return res.status(400).json({ message: 'Invalid credentials' });
         
         //create a token for logged user as session
-        const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, 'secret', { expiresIn: '1h' });
+        const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
 
         return res.status(200).json({ result: existingUser, token });
 
@@ -46,7 +49,7 @@ export const signupController = async (req, res) => {
         const result = await UserAccount.create({ email: email, password: hashedPassword, name });
 
         //create token for the new user
-        const token = jwt.sign({ email: result.email, id: result._id }, 'secret', { expiresIn: '1h' });
+        const token = jwt.sign({ email: result.email, id: result._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
         return res.status(200).json({ result, token });
 
     } catch (error) {
