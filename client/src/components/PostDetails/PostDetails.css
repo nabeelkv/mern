@@ -1,0 +1,16 @@
+.loading-post {
+  text-align: center;
+}
+
+.post-details {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.post-date {
+    color: grey;
+}
+
+.recommended-posts, .comment-section {
+  margin-top: 30px;
+}
